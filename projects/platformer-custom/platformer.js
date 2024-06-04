@@ -45,7 +45,7 @@ $(function () {
     // example usage: createPlatform(x,y,width,height)
 
     createPlatform(0, 700, 150, 100);
-    createCannon("left", 675, 0, 1000);
+    // createCannon("left", 675, 0, 1000);
 
     createPlatform(150, 0, 10, 450);
     createPlatform(150, 450, 100, 10);
@@ -55,7 +55,7 @@ $(function () {
 
     createPlatform(150, 650, 100, 100);
     createPlatform(350, 575, 200, 100);
-    createCannon("bottom", 775, 4828);
+    // createCannon("bottom", 775, 4828);
 
     createPlatform(650, 500, 100, 100);
     createPlatform(900, 500, 100, 300);
