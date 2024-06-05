@@ -78,6 +78,8 @@
       //	3. Formatted the box to look okay cool
       //	4. Adjusted the getRandomColor() function to use pastel colors instead of the full gamut of colors
       //	5. Increased the update rate from 20 fps to 60 fps and adjusted values somewhat accordingly
+      //	6. Randomly change direction when clicked box too
+      //	7. Increase box size everytime it's clicked
       //
       // By the way, the code here is EXTREMELY EXTREMELY messy and terrible. I am embarassed of how messy this is!
       // Also, the misclick detection, while it works, is very poorly implemented.
@@ -99,7 +101,7 @@
         var boardWidth = board.width(); // the maximum X-Coordinate of the screen
         var boardHeight = jQuery(window).height();
 
-        var colorStr = "rgb(128, 128, 250)";
+        var colorStr = getRandomColor();
         box.css("background-color", colorStr);
 
         // Every 50 milliseconds, call the update Function (see below)
@@ -133,7 +135,7 @@
 
         var speedIncrement = 2;
 
-        var allowedMisclicks = 10;
+        var allowedMisclicks = 1000;
 
         var successfulClick = false;
         var misclicks = 0;
@@ -143,6 +145,11 @@
         // var clickY = 0;
 
         // var direction = "right";
+
+        var boxSize = 100;
+        var fontSize = 300;
+
+        var adjustmentIncrease = 1.2;
 
         changeBoxText(points);
 
@@ -214,6 +221,11 @@
                */
         function handleBoxClick() {
           successfulClick = true;
+
+          boxSize *= adjustmentIncrease;
+          box.css("width", boxSize + "px");
+          fontSize *= adjustmentIncrease;
+          box.css("font-size", fontSize + "%");
 
           if (points % 3 === 0) {
             colorStr = getRandomColor();
