@@ -19,17 +19,47 @@ var init = function (window) {
         var circle;
         var circles = [];
 
+        var circlesPastXPositions = [];
+        var circlesPastYPositions = [];
+
+        var templateCirclePastXPosition = [0, 0, 0, 0, 0];
+        var templateCirclePastYPosition = [0, 0, 0, 0, 0];
+
+        var tail;
+        var tails = [];
+
+        var speed = 25;
+
         // TODO 2 : Create a function that draws a circle
         function drawCircle() {
             circle = draw.randomCircleInArea(canvas, true, false, "#999", 2);
-            physikz.addRandomVelocity(circle, canvas, 2.5, 2.5);
+            // circle = draw.circle(3,5);
+            physikz.addRandomVelocity(circle, canvas, speed, speed);
             view.addChild(circle);
             circles.push(circle);
+            circlesPastXPositions.push(templateCirclePastXPosition);
+            circlesPastYPositions.push(templateCirclePastYPosition);
+
+            // console.log(Object.getOwnPropertyNames(draw.circle));
+        }
+
+        function drawTails(index) {
+            tail = draw.circle(circles[i].radius, "#fff");
+            // physikz.addVelocity(tail, canvas, speed, speed);
+            tail.velocityX = circles[i].velocityX;
+            tail.velocityY = circles[i].velocityY;
+            tail.x = circlesPastXPositions[i][circlesPastXPositions[i].length - 1];
+            tail.y = circlesPastYPositions[i][circlesPastYPositions[i].length - 1];
+
+            view.addChild(tail);
+            tails.push(tail);
         }
 
         // TODO 3 / 7 : Call the drawCircle() function
         for (var i = 0; i < 100; i++) {
             drawCircle();
+            drawTails(i);
+            // drawTails();
         }
 
         ////////////////////////////////////////////////////////////
@@ -44,8 +74,18 @@ var init = function (window) {
         function update() {
             // TODO 4 : Update the circle's position //
             for (var i = 0; i < 100; i++) {
+                circlesPastXPositions[i].push(circles[i].x);
+                circlesPastXPositions[i].shift();
+                circlesPastYPositions[i].push(circles[i].y);
+                circlesPastYPositions[i].shift();
+                
+                console.log(circlesPastXPositions[0])
+                
+
                 physikz.updatePosition(circles[i]);
                 game.checkCirclePosition(circles[i]);
+                physikz.updatePosition(tails[i]);
+                game.checkCirclePosition(tails[i]);
             }
             // physikz.updatePosition(circles[0]);
             // physikz.updatePosition(circles[1]);
