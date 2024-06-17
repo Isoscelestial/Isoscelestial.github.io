@@ -3,8 +3,10 @@ body {
 }
 
 #board {
-  width: 440px;
-  height: 440px;
+  /* width: 440px;
+  height: 440px; */
+  width: calc(100vw - 16px - 2px);
+  height: calc(100vh - 16px - 2px);
   border: 1px solid white;
   background-color: black;
   position: relative;

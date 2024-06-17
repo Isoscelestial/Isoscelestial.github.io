@@ -28,19 +28,21 @@ function runProgram() {
   var FRAMES_PER_SECOND_INTERVAL = 1000 / FRAME_RATE;
 
   // Game Item Objects
-  var walker = {
-    posX: 0,
-    posY: 0,
-    speedX: 0,
-    speedY: 0,
-  };
+  var Walker = function() {
+    this.posX = 0;
+    this.posY = 0;
+    this.speedX = 0;
+    this.speedY = 0;
+    // this.pos.x = 0;
+    // this.pos.y = 0;
+    // this.speed.x = 0;
+    // this.speed.y = 0;
+    // this.force.x = 0;
+    // this.force.y = 0;
+  }
 
-  var walker2 = {
-    posX: 0,
-    posY: 0,
-    speedX: 0,
-    speedY: 0,
-  };
+  var walker = new Walker();
+  var walker2 = new Walker();
 
   // one-time setup
   var interval = setInterval(newFrame, FRAMES_PER_SECOND_INTERVAL); // execute newFrame every 0.0166 seconds (60 Frames per second)
