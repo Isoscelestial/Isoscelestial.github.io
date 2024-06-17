@@ -28,10 +28,10 @@ function runProgram() {
   var FRAMES_PER_SECOND_INTERVAL = 1000 / FRAME_RATE;
 
   // Game Item Objects
-  var Walker = function (selector) {
+  var Walker = function (selector, startX, startY) {
     this.selector = selector;
-    this.posX = 0;
-    this.posY = 0;
+    this.posX = (startX !== undefined) ? startX : 0;
+    this.posY = (startY !== undefined) ? startY : 0;
     this.speedX = 0;
     this.speedY = 0;
     // this.pos.x = 0;
@@ -102,8 +102,12 @@ function runProgram() {
 
   const walkers = [];
 
-  var walker = new Walker("#walker");
-  var walker2 = new Walker("#walker2");
+  var walker = new Walker(
+    "#walker",
+    $("#board").width() - 100,
+    $("#board").height() / 2
+  );
+  var walker2 = new Walker("#walker2", 100, $("#board").height() / 2);
 
   walkers.push(walker);
   walkers.push(walker2);
