@@ -30,16 +30,18 @@ function runProgram() {
   // Game Item Objects
   var Walker = function (selector, startX, startY) {
     this.selector = selector;
-    this.posX = startX !== undefined ? startX : 0;
-    this.posY = startY !== undefined ? startY : 0;
-    this.speedX = 0;
-    this.speedY = 0;
-    // this.pos.x = 0;
-    // this.pos.y = 0;
-    // this.speed.x = 0;
-    // this.speed.y = 0;
-    // this.force.x = 0;
-    // this.force.y = 0;
+    
+    this.pos = { x: null, y: null };
+    this.pos.x = startX !== undefined ? startX : 0;
+    this.pos.y = startY !== undefined ? startY : 0;
+
+    this.speed = { x: null, y: null };
+    this.speed.x = 0;
+    this.speed.y = 0;
+    
+    this.force = { x: null, y: null };
+    this.force.x = 0;
+    this.force.y = 0;
   };
 
   var controlMaps = {
@@ -58,45 +60,45 @@ function runProgram() {
   };
 
   Walker.prototype.setVelocity = function () {
-    this.speedX = 0;
-    this.speedY = 0;
+    this.speed.x = 0;
+    this.speed.y = 0;
 
     if (pressedKeys.includes(controlMaps[this.selector].left)) {
-      this.speedX -= 5;
+      this.speed.x -= 5;
     }
     if (pressedKeys.includes(controlMaps[this.selector].up)) {
-      this.speedY -= 5;
+      this.speed.y -= 5;
     }
     if (pressedKeys.includes(controlMaps[this.selector].right)) {
-      this.speedX += 5;
+      this.speed.x += 5;
     }
     if (pressedKeys.includes(controlMaps[this.selector].down)) {
-      this.speedY += 5;
+      this.speed.y += 5;
     }
   };
 
   Walker.prototype.reposition = function () {
-    this.posX += this.speedX;
-    this.posY += this.speedY;
+    this.pos.x += this.speed.x;
+    this.pos.y += this.speed.y;
   };
 
   Walker.prototype.redraw = function () {
-    $(this.selector).css("left", this.posX);
-    $(this.selector).css("top", this.posY);
+    $(this.selector).css("left", this.pos.x);
+    $(this.selector).css("top", this.pos.y);
   };
 
   Walker.prototype.wallCollision = function () {
-    if (this.posX > $("#board").width() - $(this.selector).width()) {
-      this.posX -= this.speedX;
+    while (this.pos.x > $("#board").width() - $(this.selector).width()) {
+      this.pos.x -= 1;
     }
-    if (this.posY > $("#board").height() - $(this.selector).height()) {
-      this.posY -= this.speedY;
+    while (this.pos.y > $("#board").height() - $(this.selector).height()) {
+      this.pos.y -= 1;
     }
-    if (this.posX < 0) {
-      this.posX -= this.speedX;
+    while (this.pos.x < 0) {
+      this.pos.x += 1;
     }
-    if (this.posY < 0) {
-      this.posY -= this.speedY;
+    while (this.pos.y < 0) {
+      this.pos.y += 1;
     }
   };
 
