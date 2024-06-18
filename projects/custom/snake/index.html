@@ -2,16 +2,18 @@
 <html>
   <head>
     <title>Snake</title>
-    <!--Link jQuery and CSS here-->
-    <link rel="stylesheet" type="text/css" href="index.css">
-    <script src="jquery.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="styles.css">
+    <script src="jquery-3.7.1.min.js"></script>
   </head>
   <body>
-    <div id="board"></div>
-    <h1 id="score">Score: 0</h1>
-    <h1 id="highScore">High Score: 0</h1>
-    <script src="index.js"></script>
-  </body>
+    <div id="game-wrapper">
+      <div id="board"></div>
+      <div id="scoreboard">
+        <h1 id="score">Score: 0</h1>
+        <h1 id="highscore">High Score: 0</h1>
+      </div>
+    </div>
 
-  <!-- Link index.js here -->
+  </body>
+  <script src="script.js"></script>
 </html>
