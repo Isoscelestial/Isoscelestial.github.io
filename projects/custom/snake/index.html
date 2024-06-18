@@ -2,18 +2,55 @@
 <html>
   <head>
     <title>Snake</title>
-    <link rel="stylesheet" type="text/css" href="styles.css">
+    <link rel="stylesheet" type="text/css" href="styles.css" />
     <script src="jquery-3.7.1.min.js"></script>
   </head>
   <body>
-    <div id="game-wrapper">
-      <div id="board"></div>
-      <div id="scoreboard">
-        <h1 id="score">Score: 0</h1>
-        <h1 id="highscore">High Score: 0</h1>
+    <div id="game-bg">
+      <div id="game-wrapper">
+        <div id="board"></div>
+        <div id="scoreboard">
+          <span class="invisible">Score:</span>
+          <h1 id="score">
+            <span class="scoreboard-label">Score: </span>
+            <span class="scoreboard-text">0</span>
+          </h1>
+          <span class="invisible">| Highscore:</span>
+          <h1 id="highscore">
+            <span class="scoreboard-label">Highscore: </span>
+            <span class="scoreboard-text">0</span>
+          </h1>
+        </div>
       </div>
     </div>
 
+    <div class="modal-bg">
+      <div id="new-game-modal" class="modal">
+        <button
+          class="modal-button"
+          onclick="$('.modal-bg').css('display', 'none')"
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="24"
+            height="24"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="4 "
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            class="feather feather-x"
+          >
+            <line x1="18" y1="6" x2="6" y2="18"></line>
+            <line x1="6" y1="6" x2="18" y2="18"></line>
+          </svg>
+        </button>
+        <h1>Snake</h1>
+        <h2>New Game</h2>
+      </div>
+    </div>
   </body>
   <script src="script.js"></script>
+  <script src="index.js"></script>
 </html>
