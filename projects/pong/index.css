@@ -1,0 +1,118 @@
+body {
+  background-color: lightblue;
+  height: calc(100vh - 100px);
+  margin: 0;
+  padding: 50px;
+  overscroll-behavior: none;
+}
+
+#board {
+  width: calc(100% - 40px);
+  height: calc(100% - 40px);
+  border: 20px dashed white;
+  /* background-color: black; */
+  position: relative;
+}
+
+#centerLine {
+  border-style: dashed;
+  border-color: white;
+  opacity: 25%;
+  border-width: 0 10px;
+
+  height: calc(100vh - 40px - 100px);
+  width: 0;
+
+  position: absolute;
+  left: 0;
+  right: 0;
+
+  margin-left: auto;
+  margin-right: auto;
+}
+
+#scoreboard {
+  position: absolute;
+
+  z-index: 1;
+  display: flex;
+  gap: 64px;
+
+  width: fit-content;
+
+  position: absolute;
+  left: 0;
+  right: 0;
+
+  margin-left: auto;
+  margin-right: auto;
+}
+
+#scoreboard h1 {
+  color: white;
+  user-select: none;
+
+  margin-top: 0;
+  font-size: 96pt;
+  font-family: "Pixelify Sans", sans-serif;
+}
+
+.paddle {
+  background-color: teal;
+  width: 20px;
+  height: 100px;
+  position: absolute;
+  /*   left: 100px; */ /* Uncomment if you want to set a "starting" position */
+  /*   top: 100px;  */ /* Uncomment if you want to set a "starting" position */
+}
+
+#paddle1 {
+  left: 20px;
+}
+
+#paddle2 {
+  right: 20px;
+}
+
+#ball {
+  background-color: orange;
+  width: 20px;
+  height: 20px;
+  position: absolute;
+
+  left: calc(50% - 10px);
+  top: calc(50% - 10px);
+
+  /* left: 90%;
+  top: 30%; */
+}
+
+#dir {
+  position: absolute;
+  background-color: red;
+  width: 4px;
+  height: 50px;
+  transform: translate(10px, 10px) rotateZ(0rad);
+}
+
+#title {
+  display: none;
+
+  position: absolute;
+  inset: 0;
+  margin: auto;
+  width: fit-content;
+  height: fit-content;
+  bottom: 60px;
+
+  z-index: 1;
+}
+
+#title,
+h1 {
+  color: white;
+  user-select: none;
+
+  font-size: 96pt;
+  font-family: "Pixelify Sans", sans-serif;
+}
