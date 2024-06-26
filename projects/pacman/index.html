@@ -3,18 +3,36 @@
   <head>
     <title>Pacman</title>
     <!-- Load CSS files -->
-    <link rel="stylesheet" type="text/css" href="index.css">
-    
+    <link rel="stylesheet" type="text/css" href="index.css" />
+    <!-- <link rel="stylesheet" href="font/Emulogic-zrEw.ttf"> -->
+
     <!-- Load JavaScript files -->
     <script src="js/jquery.min.js"></script>
     <script src="js/levels.js"></script>
     <script src="js/index.js"></script>
   </head>
-  
+
   <body>
-    <div id='board'>
-      
+    <div id="game-wrapper">
+      <div id="scoreboard">
+        <div style="flex: 1 1 0%">
+          <span>SCORE</span>
+          <span id="score">0</span>
+        </div>
+        <div style="flex: 2 2 0%">
+          <span>HIGH SCORE</span>
+          <span id="highscore">0</span>
+        </div>
+        <div style="flex: 1.5 1.5 0%">
+          <span>PELLETS</span>
+          <span id="pellets">0</span>
+        </div>
+      </div>
+      <div id="board"></div>
+      <div id="lives">
+        <img src="img/pacman.png">
+        <img src="img/pacman.png">
+      </div>
     </div>
-    <h1>h1</h1>
   </body>
 </html>

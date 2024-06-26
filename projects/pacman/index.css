@@ -1,6 +1,15 @@
+@font-face {
+  font-family: "Emulogic";
+  src: url("font/Emulogic-zrEw.ttf");
+}
 
 body {
-  background-color: darkgreen;
+  background-color: black;
+}
+
+#game-wrapper {
+  width: fit-content;
+  height: fit-content;
 }
 
 #board {
@@ -31,17 +40,44 @@ body {
   border-radius: 5px;
   background-color: gold;
   position: absolute;
-  top: 50%; left: 50%;
-  transform: translate(-50%,-50%);
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 }
 
-#pacman, #redGhost {
+#pacman,
+#redGhost {
   width: 20px;
   height: 20px;
   position: absolute;
   z-index: 1000;
 }
 
-h1 {
+#scoreboard {
   color: white;
+  font-family: "Emulogic";
+
+  display: flex;
+
+  margin-bottom: 8px;
+}
+
+/* backup for inline styles */
+#scoreboard * { 
+  flex: 1 1 0%;
+}
+
+#scoreboard * * {
+  display: block;
+  text-align: right;
+}
+
+#lives {
+  margin-top: 8px;
+}
+
+#lives * {
+  width: 20px;
+  height: 20px;
+  z-index: 1000;
 }
