@@ -64,6 +64,12 @@ $(document).ready(function () {
     );
     $(pacman.id).css("transition-timing-function", "linear");
 
+    $(redGhost.id).css(
+      "transition",
+      `left ${timeBetweenGhostFrames}ms, top ${timeBetweenGhostFrames}ms`
+    );
+    $(redGhost.id).css("transition-timing-function", "linear");
+
     // turn on event handlers
     // $(document).on("eventType", handleEvent);
 
@@ -144,7 +150,7 @@ $(document).ready(function () {
     if (canMove(redGhost)) {
       moveEntity(redGhost);
     }
-    
+
     redGhost.dir = redGhost.nextDir;
     redGhost.nextDir = chooseNextSquare(redGhost);
 
