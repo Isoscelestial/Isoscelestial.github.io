@@ -37,8 +37,6 @@ $(document).ready(function () {
   var timeBetweenPacmanFrames = 1000 / FPS; // 5 frames per second
   var timeBetweenGhostFrames = 1000 / (FPS - 1); // 4 frames per second
 
-  function startGame() {}
-
   ////////////////////////////////////////////////////////////////////////////////
   ///////////////////////// CORE LOGIC ///////////////////////////////////////////
   ////////////////////////////////////////////////////////////////////////////////
@@ -50,6 +48,8 @@ $(document).ready(function () {
   loadSetup();
   setupGame();
 
+
+  
   /*
    * Called once per "tick" of the pacmanTimer. This function should execute the
    * high-level logic for drawing new frames of Pacman:
@@ -155,6 +155,8 @@ $(document).ready(function () {
   ////////////////////////// HELPER FUNCTIONS ////////////////////////////////////
   ////////////////////////////////////////////////////////////////////////////////
 
+  ////////////////////////// SETUP FUNCTIONS /////////////////////////////////////
+
   function loadSetup() {
     // set initial values for the global variables...
     pacman = {
@@ -246,6 +248,8 @@ $(document).ready(function () {
     // redGhost
   }
 
+  /////////////////////////// MAZE FUNCTIONS /////////////////////////////////////
+
   function createMaze() {
     level = getLevel("level1");
     var square;
@@ -305,6 +309,9 @@ $(document).ready(function () {
         break;
     }
   }
+
+
+  /////////////////////////// SQUARE FUNCTIONS ///////////////////////////////////
 
   function getNextSquare(entity) {
     var checkOffsetX = 0;
@@ -486,6 +493,8 @@ $(document).ready(function () {
     // }
   }
 
+  /////////////////////////// ENTITY FUNCTIONS ///////////////////////////////////
+
   function moveEntity(entity) {
     switch (entity.dir) {
       case "up":
@@ -557,6 +566,8 @@ $(document).ready(function () {
     }
   }
 
+  /////////////////////////// PACMAN LOGIC FUNCTIONS /////////////////////////////
+
   function eatPellet(entity) {
     $("#r" + pacman.y + "c" + pacman.x)
       .find(".pellet")
@@ -579,20 +590,8 @@ $(document).ready(function () {
       $("<img>").attr("src", "img/pacman.png").appendTo("#lives");
     }
   }
-
-  function endGame() {
-    // stop the timers
-    clearInterval(pacmanTimer);
-    clearInterval(ghostTimer);
-
-    // turn off event handlers
-    $(document).off();
-  }
-
-  function mod(n, d) {
-    // Thanks MDN!
-    return ((n % d) + d) % d;
-  }
+  
+  /////////////////////////// GAME LOGIC FUNCTIONS ///////////////////////////////
 
   function enableGame(toggle, killGame) {
     killGame = killGame !== undefined ? killGame : false;
@@ -614,6 +613,23 @@ $(document).ready(function () {
     gameRunning = toggle;
   }
 
+  function endGame() {
+    // stop the timers
+    clearInterval(pacmanTimer);
+    clearInterval(ghostTimer);
+
+    // turn off event handlers
+    $(document).off();
+  }
+  
+  /////////////////////////// HELPER FUNCTIONS ///////////////////////////////////
+
+  function mod(n, d) {
+    // Thanks MDN!
+    return ((n % d) + d) % d;
+  }
+
+
   ////////////////////////////////////////////////////////////////////////////////
   ////////////////////////// EVENT HELPER FUNCTIONS //////////////////////////////
   ////////////////////////////////////////////////////////////////////////////////
@@ -623,22 +639,22 @@ $(document).ready(function () {
     switch (event.code) {
       case "ArrowUp":
       case "KeyW":
-        pacman.dir = "up";
+        pacman.nextDir = "up";
         // console.log("up");
         break;
       case "ArrowDown":
       case "KeyS":
-        pacman.dir = "down";
+        pacman.nextDir = "down";
         // console.log("down");
         break;
       case "ArrowLeft":
       case "KeyA":
-        pacman.dir = "left";
+        pacman.nextDir = "left";
         // console.log("left");
         break;
       case "ArrowRight":
       case "KeyD":
-        pacman.dir = "right";
+        pacman.nextDir = "right";
         // console.log("right");
         break;
 
