@@ -29,37 +29,13 @@ $(document).ready(function () {
 
   var lives = 3;
   var gameRunning = false;
+  var gameKilled = false;
 
   var pacmanStartPos;
   var redGhostStartPos;
 
-  function setupGame() {
-    pacmanStartPos =
-      pacmanStartPos === undefined
-        ? {
-            x: pacman.x,
-            y: pacman.y,
-          }
-        : pacmanStartPos;
-
-    redGhostStartPos =
-      redGhostStartPos === undefined
-        ? {
-            x: redGhost.x,
-            y: redGhost.y,
-          }
-        : redGhostStartPos;
-
-    // console.log(pacmanStartPos);
-
-    pacman.x = pacmanStartPos.x;
-    pacman.y = pacmanStartPos.y;
-    updateEntity(pacman, true);
-
-    redGhost.x = redGhostStartPos.x;
-    redGhost.y = redGhostStartPos.y;
-    updateEntity(redGhost, true);
-  }
+  var timeBetweenPacmanFrames = 1000 / FPS; // 5 frames per second
+  var timeBetweenGhostFrames = 1000 / (FPS - 1); // 4 frames per second
 
   function startGame() {}
 
@@ -90,34 +66,34 @@ $(document).ready(function () {
    *   - end the game!
    */
   function drawNewPacmanFrame() {
-    if (gameRunning) {
-      // console.log(`pacman: (${pacman.x}, ${pacman.y}) redGhost: (${redGhost.x}, ${redGhost.y})`);
-      // console.log([pacman.x, pacman.y], [redGhost.x, redGhost.y]);
+    // if (gameRunning) {
+    // console.log(`pacman: (${pacman.x}, ${pacman.y}) redGhost: (${redGhost.x}, ${redGhost.y})`);
+    // console.log([pacman.x, pacman.y], [redGhost.x, redGhost.y]);
 
-      if (level[pacman.y][pacman.x] === 0) {
-        eatPellet(pacman);
-      }
-
-      if (canMove(pacman)) {
-        moveEntity(pacman);
-      }
-
-      if (pacman.x === redGhost.x && pacman.y === redGhost.y) {
-        gameRunning = false;
-        lives--;
-        updateLives();
-        if (lives <= 0) {
-          endGame();
-        } else {
-          setupGame();
-        }
-      }
-
-
-      pacman.x = mod(pacman.x, BOARD_WIDTH);
-      pacman.y = mod(pacman.y, BOARD_HEIGHT);
-      updateEntity(pacman, true);
+    if (level[pacman.y][pacman.x] === 0) {
+      eatPellet(pacman);
     }
+
+    if (canMove(pacman)) {
+      moveEntity(pacman);
+    }
+
+    if (pacman.x === redGhost.x && pacman.y === redGhost.y) {
+      enableGame(false);
+      lives--;
+      updateLives();
+      if (lives <= 0) {
+        enableGame(false, true);
+        endGame();
+      } else {
+        setupGame();
+      }
+    }
+
+    pacman.x = mod(pacman.x, BOARD_WIDTH);
+    pacman.y = mod(pacman.y, BOARD_HEIGHT);
+    updateEntity(pacman, true);
+    // }
   }
 
   /*
@@ -129,50 +105,50 @@ $(document).ready(function () {
    * - move and redraw the ghost
    */
   function drawNewGhostFrame() {
-    if (gameRunning) {
-      redGhost.target.x = pacman.x;
-      redGhost.target.y = pacman.y;
-      
-      // console.log(`now: ${redGhost.dir}, next: ${redGhost.nextDir}`);
-      if (canMove(redGhost)) {
-        moveEntity(redGhost);
-      }
-      
-      redGhost.dir = redGhost.nextDir;
-      redGhost.nextDir = chooseNextSquare(redGhost);
-      
-      redGhost.x = mod(redGhost.x, BOARD_WIDTH - 2);
-      redGhost.y = mod(redGhost.y, BOARD_HEIGHT - 2);
-      updateEntity(redGhost, true);
-      console.log(redGhost);
+    // if (gameRunning) {
+    redGhost.target.x = pacman.x;
+    redGhost.target.y = pacman.y;
 
-      // OLD, INEFFECTIVE AI
-
-      // targetVector = {
-      //   x: redGhost.target.x - redGhost.x,
-      //   y: redGhost.target.y - redGhost.y,
-      // };
-      //
-      // if (Math.abs(targetVector.x) > Math.abs(targetVector.y)) {
-      //   redGhost.dir = targetVector.x > 0 ? "right" : "left";
-      //   if (canMove(redGhost)) {
-      //     moveEntity(redGhost);
-      //   } else {
-      //     redGhost.dir = targetVector.y > 0 ? "down" : "up";
-      //     if (canMove(redGhost)) moveEntity(redGhost);
-      //   }
-      // } else if (Math.abs(targetVector.x) < Math.abs(targetVector.y)) {
-      //   redGhost.dir = targetVector.y > 0 ? "down" : "up";
-      //   if (canMove(redGhost)) {
-      //     moveEntity(redGhost);
-      //   } else {
-      //     redGhost.dir = targetVector.x > 0 ? "right" : "left";
-      //     if (canMove(redGhost)) moveEntity(redGhost);
-      //   }
-      // }
-      //
-      // console.log(`(${targetVector.x}, ${targetVector.y}) ${redGhost.dir}`);
+    // console.log(`now: ${redGhost.dir}, next: ${redGhost.nextDir}`);
+    if (canMove(redGhost)) {
+      moveEntity(redGhost);
     }
+
+    redGhost.dir = redGhost.nextDir;
+    redGhost.nextDir = chooseNextSquare(redGhost);
+
+    redGhost.x = mod(redGhost.x, BOARD_WIDTH);
+    redGhost.y = mod(redGhost.y, BOARD_HEIGHT);
+    updateEntity(redGhost, true);
+    // console.log(redGhost);
+
+    // OLD, INEFFECTIVE AI
+
+    // targetVector = {
+    //   x: redGhost.target.x - redGhost.x,
+    //   y: redGhost.target.y - redGhost.y,
+    // };
+    //
+    // if (Math.abs(targetVector.x) > Math.abs(targetVector.y)) {
+    //   redGhost.dir = targetVector.x > 0 ? "right" : "left";
+    //   if (canMove(redGhost)) {
+    //     moveEntity(redGhost);
+    //   } else {
+    //     redGhost.dir = targetVector.y > 0 ? "down" : "up";
+    //     if (canMove(redGhost)) moveEntity(redGhost);
+    //   }
+    // } else if (Math.abs(targetVector.x) < Math.abs(targetVector.y)) {
+    //   redGhost.dir = targetVector.y > 0 ? "down" : "up";
+    //   if (canMove(redGhost)) {
+    //     moveEntity(redGhost);
+    //   } else {
+    //     redGhost.dir = targetVector.x > 0 ? "right" : "left";
+    //     if (canMove(redGhost)) moveEntity(redGhost);
+    //   }
+    // }
+    //
+    // console.log(`(${targetVector.x}, ${targetVector.y}) ${redGhost.dir}`);
+    // }
   }
 
   ////////////////////////////////////////////////////////////////////////////////
@@ -184,6 +160,7 @@ $(document).ready(function () {
     pacman = {
       id: "#pacman",
       dir: "right",
+      nextDir: "right",
       x: Number($("#pacman").css("left").split("px")[0]) / SQUARE_SIZE,
       y: Number($("#pacman").css("top").split("px")[0]) / SQUARE_SIZE,
       transform: {
@@ -209,12 +186,6 @@ $(document).ready(function () {
       interval: 250,
     };
 
-    // start the timers to draw new frames
-    var timeBetweenPacmanFrames = 1000 / FPS; // 5 frames per second
-    var timeBetweenGhostFrames = 1000 / (FPS - 1); // 4 frames per second
-    pacmanTimer = setInterval(drawNewPacmanFrame, timeBetweenPacmanFrames);
-    ghostTimer = setInterval(drawNewGhostFrame, timeBetweenGhostFrames);
-
     // add movement transition for entities
     // $(pacman.id).css(
     //   "transition",
@@ -238,6 +209,41 @@ $(document).ready(function () {
     // USE addEventListener INSTEAD OF JQUERY'S ON FUNCTION; WE NEED event.code
     addEventListener("keydown", handleKeyDown);
     // $(document).on("keydown", handleKeyDown);
+  }
+
+  function setupGame() {
+    pacmanStartPos =
+      pacmanStartPos === undefined
+        ? {
+            x: pacman.x,
+            y: pacman.y,
+          }
+        : pacmanStartPos;
+
+    redGhostStartPos =
+      redGhostStartPos === undefined
+        ? {
+            x: redGhost.x,
+            y: redGhost.y,
+          }
+        : redGhostStartPos;
+
+    // console.log(pacmanStartPos);
+
+    pacman.x = pacmanStartPos.x;
+    pacman.y = pacmanStartPos.y;
+    updateEntity(pacman, true);
+    pacman.dir = "right";
+    rotateEntity(pacman);
+
+    redGhost.x = redGhostStartPos.x;
+    redGhost.y = redGhostStartPos.y;
+    updateEntity(redGhost, true);
+    redGhost.dir = "right";
+    redGhost.nextDir = "right";
+    rotateEntity(redGhost);
+
+    // redGhost
   }
 
   function createMaze() {
@@ -583,8 +589,29 @@ $(document).ready(function () {
     $(document).off();
   }
 
-  function mod(n, d) { // Thanks MDN!
+  function mod(n, d) {
+    // Thanks MDN!
     return ((n % d) + d) % d;
+  }
+
+  function enableGame(toggle, killGame) {
+    killGame = killGame !== undefined ? killGame : false;
+    gameKilled = gameKilled === true ? true : killGame;
+
+    console.log(killGame, gameKilled);
+    if (toggle && !gameRunning) {
+      if (!gameKilled) {
+        console.log("speed up");
+        // start the timers to draw new frames
+        pacmanTimer = setInterval(drawNewPacmanFrame, timeBetweenPacmanFrames);
+        ghostTimer = setInterval(drawNewGhostFrame, timeBetweenGhostFrames);
+      }
+    } else if (!toggle) {
+      console.log("clear");
+      clearInterval(pacmanTimer);
+      clearInterval(ghostTimer);
+    }
+    gameRunning = toggle;
   }
 
   ////////////////////////////////////////////////////////////////////////////////
@@ -592,7 +619,7 @@ $(document).ready(function () {
   ////////////////////////////////////////////////////////////////////////////////
 
   function handleKeyDown(event) {
-    gameRunning = true;
+    enableGame(true);
     switch (event.code) {
       case "ArrowUp":
       case "KeyW":
