@@ -89,6 +89,8 @@ h2::selection {
   width: 18px;
   height: 18px;
   margin: 1px;
+
+  transition: left 100ms linear 0s, top 100ms linear 0s;
 }
 
 #snake-head {

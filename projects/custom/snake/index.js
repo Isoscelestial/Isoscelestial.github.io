@@ -370,10 +370,12 @@ function getRandomAvailablePosition() {
   var spaceIsAvailable;
   var randomPosition = {};
 
+  // console.log("");
   /* Generate random positions until one is found that doesn't overlap with the snake */
   while (!spaceIsAvailable) {
     randomPosition.column = Math.floor(Math.random() * COLUMNS);
     randomPosition.row = Math.floor(Math.random() * ROWS);
+    // console.log("move", randomPosition.row, randomPosition.column);
     // spaceIsAvailable = true;
 
     /*
@@ -383,12 +385,15 @@ function getRandomAvailablePosition() {
     */
 
     for (var i = 0; i < snake.body.length; i++) {
+      // console.log(i, snake.body[i].row, snake.body[i].column);
       // spaceIsAvailable = true;
       if (
         randomPosition.row == snake.body[i].row &&
         randomPosition.column == snake.body[i].column
       ) {
+        // console.log("RE-MOVING THE APPLE!!!!");
         spaceIsAvailable = false;
+        break;
       } else {
         spaceIsAvailable = true;
       }
